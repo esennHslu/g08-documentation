@@ -1,0 +1,10 @@
+# CHANGELOG
+
+## Release v1.0.0
+
+### [1.1 Grundkommunikation](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/1)
+
+- Establish basic communication between logger component and server.
+- Use this new communication in DemoApp
+
+---
