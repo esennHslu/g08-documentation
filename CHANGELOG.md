@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [Use StringPersistor to save log messages](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/12)
+
+- LoggerServer now uses Stringpersistor instead of logging received messages to cli.
+
+Contributors: @laurin.scholtysik1
+
 ### [String persistor does not create path if it does not exist](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/20)
 
 - FileStringPersistor now creates the directory of the specified logfile if it does not exist yet.
