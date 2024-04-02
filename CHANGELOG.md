@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### [Add and use config file to logger component and server](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/14)
+
+- LoggerServer can now be configured through the LoggerServer.properties file.
+
+Contributors: @laurin.scholtysik1 
+
 ### [Use StringPersistor to save log messages](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/12)
 
 - LoggerServer now uses Stringpersistor instead of logging received messages to cli.
