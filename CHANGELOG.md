@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [2.5 Logger-Schnittstelle: Log-Level](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/11)
+
+- Logger component implements interfaces now
+- Logger component sends loglevel to server
+- Logger server receives loglevel from clients and writes them down
+
+Contributors: @eldar.omerovic1
+
 ### [Add and use config file to logger component and server](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/14)
 
 - LoggerServer can now be configured through the LoggerServer.properties file.
