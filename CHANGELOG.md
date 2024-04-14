@@ -1,5 +1,14 @@
 # CHANGELOG
 
+### [2.6 Auslieferbarkeit von LoggerServer als Image für einen Docker-Container](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/13)
+
+- A dockerfile was added that packs the logger-server inside a dockerimage
+- Plugin was added to deliver the jar as an uberjar
+- A docker-compose file was also added that runs the dockerimage as a container.
+
+Contributors: @enya.senn1
+
+
 ### [2.4 Logger-Schnittstelle: Austauschbarkeit](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/10)
 
 - Logger component publishes the concrete `LoggerSetupBuilder` implementation as Java SPI provider
