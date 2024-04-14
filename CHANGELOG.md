@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [2.4 Logger-Schnittstelle: Austauschbarkeit](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/10)
+
+- Logger component publishes the concrete `LoggerSetupBuilder` implementation as Java SPI provider
+- DemoApp consumes the builder instance via Java SPI (as described above)
+
+Contributors: @jan.rueger1
+
 ### [2.5 Logger-Schnittstelle: Log-Level](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/11)
 
 - Logger component implements interfaces now
