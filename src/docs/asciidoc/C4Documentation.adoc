@@ -1,0 +1,35 @@
+# C1 Architektur Diagram
+
+## Übersicht
+- **Issue**: https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/15[C1 Architektur Diagram]
+- **Autor**: @icsenn
+- **Erstelldatum**: 14.04.2022
+
+
+- **Client-System**: Dies ist der Ort, an dem der Benutzer oder das System die Protokollmeldungen initiiert.
+- **Protokollserver**: Ein System, das Protokollnachrichten vom Client empfängt und sie möglicherweise speichert oder verarbeitet.
+- **Logger Common**: Eine gemeinsame Bibliothek oder ein Satz von Dienstprogrammen, die sowohl vom Client als auch vom Server verwendet werden, um die Protokollierung zu erleichtern.
+- **Logger-Komponente**: Ein spezifisches Modul oder eine Komponente innerhalb des Client-Systems, das/die für das Senden von Protokollnachrichten verantwortlich ist.
+- **Logger-Server**: Die serverseitige Anwendung, die eingehende Protokollnachrichten verarbeitet.
+
+Mermaid Diagram Code:
+
+```mermaid
+C4Context
+  title System Context diagram for Logging System
+  Enterprise_Boundary(eb, "Logging System") {
+    Person(client, "Client", "User or system that initiates log messages.")
+    System_Boundary(sb, "Client System") {
+      System(loggerComponent, "Logger Component", "Module responsible for sending log messages.")
+      System(loggerCommon, "Logger Common", "Shared library for logging functionalities.")
+    }
+    System(loggerServer, "Logging Server", "Receives and processes log messages.")
+
+    Rel(client, loggerComponent, "Initiates log messages")
+    BiRel(loggerComponent, loggerCommon, "Uses shared logging utilities")
+    Rel(loggerComponent, loggerServer, "Sends log messages to")
+  }
+```
+
+
+image::C1MermaidChart.png[]
