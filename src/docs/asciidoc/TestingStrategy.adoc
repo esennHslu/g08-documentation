@@ -1,0 +1,44 @@
+= Testing Strategie
+
+Dieses Dokument beschreibt die Strategie, wie das verteilte Logging-System als Ganzes und die einzelnen Komponenten getestet werden sollen.
+
+== Überblick Testarten
+
+Grundsätzlich sollen so viele Tests wie möglich automatisiert werden. Dies resultiert in einem leicht erhöhten Initialaufwand, senkt jedoch den wiederkehrenden Zeitaufwand vehement.
+
+== Automatisierte Tests
+
+Folgende Arten von automatisierten Tests sollen wo sinnvoll zum Testen verwendet werden:
+
+- Unit Test
+- Integration Test
+
+Das verteilte Logging-System und seine Komponenten verfügen über relativ wenig _Business_-Logik, weshalb der Einsatz von *Unit*-Tests eher limitiert ist. Um die Komponentenübergreifende Funktionalität zu testen sollen deshalb vermehrt *Integration*-Tests mithilfe von https://testcontainers.com/[Test Containers] realisiert werden.
+
+== Manuelle Abnahmetests
+
+Alle Use-Cases, welche nur schwer automatisiert testbar sind und oder der Aufwand dafür nicht sinnvoll ist, sollen als manuelle _Abnahme_-Tests realisiert werden.
+
+Da das gesamte Team aus Entwicklern und Entwicklerinnen besteht und keine Stakeholder in anderen Rollen bestehen, werden die manuellen Tests als _Whitebox_-Tests erstellt und durchgeführt.
+
+=== Drehbuch: Logs an Server senden mit min. Loglevel
+
+*Vorbedingungen:*
+
+* IntelliJ IDEA installiert
+* OpenJDK v21.x LTS
+* alle Repositories
+    ** ausgecheckt auf der gewünschten Version
+    ** Maven `compile` ausgeführt (bzw. Packages aktualisiert und heruntergeladen)
+    ** geöffnet in IntelliJ
+
+*Drehbuch:*
+
+|===
+|Schritt |Aktion |Erwartetes Resultat | Effektives Resultat
+
+|Server starten | (click) _Run 'LoggerServer.main()'_ | neues Terminal öffnet sich, Meldung erscheint: `Server started, waiting for connections...` |
+| DemoApp ausführen | (click) _Run 'DemoApp.main()'_ | neues Terminal öffnet sich, Programm wird _ohne_ Fehler ausgeführt (Exit Code = 0) |
+| Logs in Shell verifizieren | (open) LoggerServer Terminal | 4 Logs sollten in der Console ersichtlich sein (1x info, 1x warn, 2x error) |
+| Logs in File verifizieren | (open) `<logger>/Logs/Logger.log` | 4 Logs mit der Source _demo-app_ und entsprechenden Timestamps sollten ersichtlich sein (1x info, 1x warn, 2x error) |
+|===
