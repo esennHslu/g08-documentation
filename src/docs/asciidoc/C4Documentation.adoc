@@ -16,7 +16,8 @@
 
 Mermaid Diagram Code:
 
-```mermaid
+[mermaid, format="svg", opts="inline"]
+----
 C4Context
   title System Context diagram for Logging System
   Enterprise_Boundary(eb, "Logging System") {
@@ -31,9 +32,7 @@ C4Context
     BiRel(loggerComponent, loggerCommon, "Uses shared logging utilities")
     Rel(loggerComponent, loggerServer, "Sends log messages to")
   }
-```
-
-image::C1MermaidChart.png[]
+----
 
 ## C2 Container Diagram
 
@@ -60,8 +59,6 @@ graph TB
     class LoggerInterface,LoggerCommon,LoggerServer,StringPersistor container;
     class DemoApp,LoggerClient system;
 ----
-
-image::images/C2-Container-Diagram.png[]
 
 ## C4 Erstellen einer Logger Instanz
 
@@ -91,8 +88,6 @@ sequenceDiagram
     LC->>DA: RemoteLogger
     Note over DA: Use RemoteLogger to send logs
 ----
-
-image::images/C4-seqdia-creatingRemoteLogger.png[]
 
 ## C4 Senden und Speichern von Lognachrichten
 
@@ -131,5 +126,3 @@ sequenceDiagram
     LS->>+SP: save(Instant.now(), message)
     Note over SP: write to file 
 ----
-
-image::images/C4-seqdia-sending-messages.png[]
