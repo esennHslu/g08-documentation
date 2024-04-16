@@ -1,6 +1,8 @@
-# C1 Architektur Diagram
+# C4 Modell
 
-## Übersicht
+## C1 Architektur Diagram
+
+### Übersicht
 - **Issue**: https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/15[C1 Architektur Diagram]
 - **Autor**: @icsenn
 - **Erstelldatum**: 14.04.2022
@@ -31,5 +33,103 @@ C4Context
   }
 ```
 
-
 image::C1MermaidChart.png[]
+
+## C2 Container Diagram
+
+### Übersicht
+- **Issue**: https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/16[C2 Architektur Diagram]
+- **Autor**: @eldar.omerovic1
+- **Erstelldatum**: 16.04.2022
+
+[mermaid, format="svg", opts="inline"]
+----
+graph TB
+    %% C2 Level - Container Diagram for DemoApp
+    subgraph "Logging System"
+        LoggerClient(Logger Client) -. "Implements" .-> LoggerInterface(Logger Interface)
+        LoggerClient -- "RPC Calls" --> LoggerServer(Logger Server)
+        LoggerServer -- "Uses" --> StringPersistor(String Persistor)
+    end
+
+    DemoApp(Demo App) -- "Uses" --> LoggerInterface
+
+    classDef system fill:#e6e6e6,stroke:#333,stroke-width:2px;
+    classDef container fill:#f9f,stroke:#333,stroke-width:1px;
+    classDef external fill:#ff9,stroke:#333,stroke-width:1px;
+    class LoggerInterface,LoggerCommon,LoggerServer,StringPersistor container;
+    class DemoApp,LoggerClient system;
+----
+
+image::images/C2-Container-Diagram.png[]
+
+## C4 Erstellen einer Logger Instanz
+
+### Übersicht
+- **Issue**: -
+- **Autor**: @eldar.omerovic1
+- **Erstelldatum**: 16.04.2022
+
+Dieses Sequenzdiagram zeigt die Instanzierung einer RemoteLogger Instanz um Log-Nachrichten zu senden.
+
+[mermaid, format="svg", opts="inline"]
+----
+sequenceDiagram
+    title Initiating Logger
+    participant DA as DemoApp
+    participant LC as LoggerClient
+    participant LCB as LoggerClientBuilder
+    participant L as RemoteLogger
+
+    DA->>LCB: new LoggerClient.Builder()
+    Note over LCB: Configure Builder
+    LCB->>LCB: build()
+    LCB->>DA: Instance of LoggerClient
+    DA->>LC: createLogger()
+    LC->>L: new RemoteLogger(this)
+    L->>LC: Instancce of RemoteLogger
+    LC->>DA: RemoteLogger
+    Note over DA: Use RemoteLogger to send logs
+----
+
+image::images/C4-seqdia-creatingRemoteLogger.png[]
+
+## C4 Senden und Speichern von Lognachrichten
+
+### Übersicht
+- **Issue**: -
+- **Autor**: @eldar.omerovic1
+- **Erstelldatum**: 16.04.2022E
+
+Dieses Sequenzdiagram zeigt wie eine Nachricht gesendet und gespeichert wird.
+
+[mermaid, format="svg", opts="inline"]
+----
+sequenceDiagram
+    title Saving Logs
+    box Client
+    participant DA as DemoApp
+    participant RL as RemoteLogger
+    participant LC as LoggerClient
+    end
+    participant LMD as LogMessageDO
+    box Server
+    participant LS as LoggerServer
+    end
+    box Persistor
+    participant SP as StringPersistor
+    end
+
+    DA->>RL: log(loglevel, message)
+    RL->>LC: sendLog(message, loglevel)
+    LC->>LMD: LogMessageDo.Builder(message)
+    Note over LMD: Configure
+    LMD->>LMD: build()
+    LMD->>LC: Instance of LogMessageDO
+    LC-->>LS: outputStream.flush() [Network Call of LogMessageDO]
+    LS->>LS: logMessage(LogMessageDO)
+    LS->>+SP: save(Instant.now(), message)
+    Note over SP: write to file 
+----
+
+image::images/C4-seqdia-sending-messages.png[]
