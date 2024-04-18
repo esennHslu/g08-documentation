@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### [3.11 Austauschbare Speicherformate](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/26)
+
+- Add interface for log stratgies
+- Implement CSV and default TEXT strategy
+
+Contributors: @eldar.omerovic1
+
 ### [2.6 Auslieferbarkeit von LoggerServer als Image für einen Docker-Container](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/13)
 
 - A dockerfile was added that packs the logger-server inside a dockerimage
