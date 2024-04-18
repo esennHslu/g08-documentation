@@ -1,0 +1,51 @@
+== Log Strategy Implementation
+
+== Class Diagram
+
+Dies zeigt die Abhängigkeiten und Funktionsweisen der Klassen.
+
+[mermaid, format="svg", opts="inline"]
+----
+classDiagram
+    class LogStrategy {
+        <<interface>>
+        +format(LogMessageDo message) String
+    }
+
+    class CSVLogStrategy {
+        +format(LogMessageDo message) String
+        -escapeCsv(String input) String
+    }
+
+    class TextLogStrategy {
+        +format(LogMessageDo message) String
+    }
+
+    class LoggerServer {
+        -LogStrategy strategy
+        -logMessage(String message) void
+    }
+
+    LogStrategy <|.. CSVLogStrategy : implements
+    LogStrategy <|.. TextLogStrategy : implements
+    LoggerServer o-- LogStrategy : uses
+----
+
+== Sequence Diagram
+
+Dies beschreibt wie das Strategy Interface genutzt werden kann.
+
+[mermaid, format="svg", opts="inline"]
+----
+sequenceDiagram
+    participant LS as LoggerServer
+    participant LSTG as LogStrategy
+    participant CSVLSTG as CSVLogStrategy
+    participant SP as StringPersistor
+
+    LS->>+LSTG: format(message)
+    LSTG->>+CSVLSTG: format(message)
+    CSVLSTG-->>-LSTG: formattedMessage (as CSV)
+    LSTG-->>-LS: formattedMessage (as CSV)
+    LS->>SP: save(formattedMessage)
+----

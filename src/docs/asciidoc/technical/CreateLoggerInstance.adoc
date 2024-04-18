@@ -1,0 +1,23 @@
+== Erstellen einer Logger Instanz
+
+Dieses Sequenzdiagram zeigt die Instanzierung einer RemoteLogger Instanz um Log-Nachrichten zu senden.
+
+[mermaid, format="svg", opts="inline"]
+----
+sequenceDiagram
+    title Initiating Logger
+    participant DA as DemoApp
+    participant LC as LoggerClient
+    participant LCB as LoggerClientBuilder
+    participant L as RemoteLogger
+
+    DA->>LCB: new LoggerClient.Builder()
+    Note over LCB: Configure Builder
+    LCB->>LCB: build()
+    LCB->>DA: Instance of LoggerClient
+    DA->>LC: createLogger()
+    LC->>L: new RemoteLogger(this)
+    L->>LC: Instancce of RemoteLogger
+    LC->>DA: RemoteLogger
+    Note over DA: Use RemoteLogger to send logs
+----

@@ -1,0 +1,32 @@
+== Senden und Speichern von Lognachrichten
+
+Dieses Sequenzdiagram zeigt wie eine Nachricht gesendet und gespeichert wird.
+
+[mermaid, format="svg", opts="inline"]
+----
+sequenceDiagram
+    title Saving Logs
+    box Client
+    participant DA as DemoApp
+    participant RL as RemoteLogger
+    participant LC as LoggerClient
+    end
+    participant LMD as LogMessageDO
+    box Server
+    participant LS as LoggerServer
+    end
+    box Persistor
+    participant SP as StringPersistor
+    end
+
+    DA->>RL: log(loglevel, message)
+    RL->>LC: sendLog(message, loglevel)
+    LC->>LMD: LogMessageDo.Builder(message)
+    Note over LMD: Configure
+    LMD->>LMD: build()
+    LMD->>LC: Instance of LogMessageDO
+    LC-->>LS: outputStream.flush() [Network Call of LogMessageDO]
+    LS->>LS: logMessage(LogMessageDO)
+    LS->>+SP: save(Instant.now(), message)
+    Note over SP: write to file 
+----
