@@ -6,7 +6,6 @@ V0.1.0, 2024-04-18
 :toc-title: Inhaltsverzeichnis
 :toclevels: 1
 
-image::HSLU-Logo-21-klein.png[HSLU-Logo]
 
 == Einführung
 Das ist die Dokumentation (auch als link:index.pdf[PDF]) der Gruppe g08.
@@ -30,3 +29,6 @@ Das Team besteht aus folgenden Personen:
 * link:technical/LogStrategies.adoc[Log Strategies]
 * link:technical/CreateLoggerInstance.adoc[Create Logger Instance]
 * link:technical/LogMessageFromClientToFile.adoc[Log-Message From Client To File - The Process]
+
+== -
+image::HSLU-Logo-21-klein.png[HSLU-Logo]
