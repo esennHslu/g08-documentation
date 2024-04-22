@@ -38,7 +38,55 @@ Da das gesamte Team aus Entwicklern und Entwicklerinnen besteht und keine Stakeh
 |Schritt |Aktion |Erwartetes Resultat | Effektives Resultat
 
 |Server starten | (click) _Run 'LoggerServer.main()'_ | neues Terminal öffnet sich, Meldung erscheint: `Server started, waiting for connections...` |
-| DemoApp ausführen | (click) _Run 'DemoApp.main()'_ | neues Terminal öffnet sich, Programm wird _ohne_ Fehler ausgeführt (Exit Code = 0) |
-| Logs in Shell verifizieren | (open) LoggerServer Terminal | 4 Logs sollten in der Console ersichtlich sein (1x info, 1x warn, 2x error) |
+| DemoApp starten | (click) _Run 'DemoApp.main()'_ | neues Terminal öffnet sich, Programm wird _ohne_ Fehler ausgeführt (Exit Code = 0) |
+| Logs Senden | (type) _Log1_ into client CLI | 4 Logs sollten in der Server-Console ersichtlich sein (1x info, 1x warn, 2x error) in dieser reihenfolge mit text _"Log1"_|
 | Logs in File verifizieren | (open) `<logger>/Logs/Logger.log` | 4 Logs mit der Source _demo-app_ und entsprechenden Timestamps sollten ersichtlich sein (1x info, 1x warn, 2x error) |
+|===
+
+=== Drehbuch: Logs aus Cache nach client restart an Server Senden
+
+*Vorbedingungen:*
+
+* IntelliJ IDEA installiert
+* OpenJDK v21.x LTS
+* alle Repositories
+** ausgecheckt auf der gewünschten Version
+** Maven `compile` ausgeführt (bzw. Packages aktualisiert und heruntergeladen)
+** geöffnet in IntelliJ
+
+*Drehbuch:*
+
+|===
+|Schritt |Aktion |Erwartetes Resultat | Effektives Resultat
+| DemoApp starten | (click) _Run 'DemoApp.main()'_ | neues Terminal öffnet sich, Programm wird _ohne_ Fehler ausgeführt (Exit Code = 0) |
+| Logs cachen | (type) _"Log1"_ into client CLI | |
+| Demo App Schliessen | (click) _Stop 'DemoApp'_ | App stoppt `(Process finished with exit code 130)` |
+| Server starten | (click) _Run 'LoggerServer.main()'_ | neues Terminal öffnet sich, Meldung erscheint: `Server started, waiting for connections...` |
+| Logs in Shell verifizieren | (open) LoggerServer Terminal | 4 Logs sollten in der Console in dieser reihenfolge ersichtlich sein: 1x info, 1x warn, 2x error. mit nachricht _"Log1"_ |
+| Logs in File verifizieren | (open) <logger>/Logs/Logger.log | 4 Logs mit der Source _demo-app_ und entsprechenden Timestamps sollten ersichtlich sein (1x info, 1x warn, 2x error) |
+|===
+
+=== Drehbuch: Logs nach Connection-Unterbruch aus Cache nach an Server Senden
+
+*Vorbedingungen:*
+
+* IntelliJ IDEA installiert
+* OpenJDK v21.x LTS
+* alle Repositories
+** ausgecheckt auf der gewünschten Version
+** Maven `compile` ausgeführt (bzw. Packages aktualisiert und heruntergeladen)
+** geöffnet in IntelliJ
+
+*Drehbuch:*
+
+|===
+|Schritt |Aktion |Erwartetes Resultat | Effektives Resultat
+| DemoApp starten | (click) _Run 'DemoApp.main()'_ | neues Terminal öffnet sich, Programm wird _ohne_ Fehler ausgeführt (Exit Code = 0) |
+| Server starten | (click) _Run 'LoggerServer.main()'_ | neues Terminal öffnet sich, Meldung erscheint: `Server started, waiting for connections...` |
+| Logs Senden | (type) _Log1_ into client CLI | 4 Logs sollten in der Server-Console ersichtlich sein (1x info, 1x warn, 2x error) in dieser reihenfolge mit text _"Log1"_|
+| Server Stoppen | (click) _Stop 'LoggerServer'_ | App stoppt `(Process finished with exit code 130)`|
+| Logs cachen | (type) _"Log2"_ into client CLI | |
+| Server starten | (click) _Run 'LoggerServer.main()'_ | neues Terminal öffnet sich, Meldung erscheint: `Server started, waiting for connections...` |
+| Logs in Shell verifizieren | (open) LoggerServer Terminal | 4 Logs sollten in der Console in dieser reihenfolge ersichtlich sein: 1x info, 1x warn, 2x error. mit nachricht _"Log2"_ |
+| Logs in File verifizieren | (open) <logger>/Logs/Logger.log | 4 Logs mit der Source _demo-app_ und entsprechenden Timestamps sollten ersichtlich sein (1x info, 1x warn, 2x error) |
 |===
