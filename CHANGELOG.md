@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## SNAPSHOT v3.0.0
+
+### [3.8 Zuverlässige Behandlung von Verbindungsunterbrüchen](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/23)
+
+LoggerComponent
+- Cache logs if logger client cannot connect at startup or connection breaks
+- Resend cached logs on startup or once connection is resumed
+
+Demo App
+- Send every type of loglevel upon cli user input (loop)
+
+StringPersistor
+- Strings to be saved now escape newline characters
+- If get is called but nothing has been saved before, an empty list is returned
+
+Contributors: @laurin.scholtysik1
+
+
 ### [3.11 Austauschbare Speicherformate](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/26)
 
 - Add interface for log stratgies
