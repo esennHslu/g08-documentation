@@ -2,6 +2,15 @@
 
 ## SNAPSHOT v3.0.0
 
+### [3.10 Anbindung von StringPersistor mittels Adapter-Pattern](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/25)
+
+LoggerServer
+- Added adapter to handle the communication with the StringPersistor interface in the LoggerServer
+- Added Tests for adapter
+- Added Exception Handling in safeLogMessage method
+
+Contributors: @enya.senn1
+
 ### [3.8 Zuverlässige Behandlung von Verbindungsunterbrüchen](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/23)
 
 LoggerComponent
