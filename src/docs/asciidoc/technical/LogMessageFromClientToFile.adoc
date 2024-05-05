@@ -14,6 +14,10 @@ sequenceDiagram
     participant LMD as LogMessageDO
     box Server
     participant LS as LoggerServer
+    participant LMC as LogMessageConsumer*n
+    participant LPQ as PriorityQueue
+    participant LMP as LogMessagePersistor*1
+    participant LMS as LogStrategy
     end
     box Persistor
     participant SP as StringPersistor
@@ -26,7 +30,23 @@ sequenceDiagram
     LMD->>LMD: build()
     LMD->>LC: Instance of LogMessageDO
     LC-->>LS: outputStream.flush() [Network Call of LogMessageDO]
-    LS->>LS: logMessage(LogMessageDO)
-    LS->>+SP: save(Instant.now(), message)
-    Note over SP: write to file 
+    LS ->> LMP: run()
+    LS ->> LMC: run()
+    LMC ->> LPQ: put(LogMessageDo)
+    LMP ->> LPQ: take()
+    LPQ -->> LMP: LogMessageDo
+    LMP ->> LMS: format(LogMessageDo)
+    LMS -->> LMP: serialized message
+    LMP->>+SP: save(log.processedAt(), message)
+    Note over SP: write to file
 ----
+
+=== Logger Server - Producer/Consumer
+
+Mit dem Issue https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/24[#24] kam unteranderem die Anforderung einer chronologischen Reihenfolge der Logs die einzuhalten ist. Gleichzeitig sollten mehrere Clients gleichzeitig in der Lage sein ihre Logs an der Server zu senden.
+
+Um mehrere Socket Connections zu handlen wurde eine _Virtual Thread Factory_ verwendet, wobei für jeden Client Socket ein eigener Virtual Thread erstellt wird, welcher diese Connection betreut. Mit Virtual Threads kann man im gegensatz zu den herkömmlichen Threads beliebig viele Connections handlen und hat gleichzeitig weniger "Kosten" beim Management der Threads. In der Klasse `LogMessageConsumer` werden alle serialisierten `LogMessageDo` vom Client deserialisiert und anschliessend in eine gemeinsame `PriorityBlockingQueue` gepusht.
+
+Die `PriorityBlockingQueue` ist threadsafe und soll dafür sorgen, dass jeweils der älteste Log (gemäss Erstellungsdatum beim Client) immer zuoberst anliegt und somit als nächstes vom `LogMessagePersistor` konsumiert wird.
+
+Beim `LogMessagePersistor` handelt es sich um einen einzelnen Thead, welcher Logs von der `PriorityBlockingQueue` pollt und jene seriell via einer `StringPersistor` Instanz ins File persisitert. Hierbei wurde bewusst ein einzelner Thread gewählt, sodass keine Race-Conditions beim erweben vom Lock des StringPersistors entstehen können, welche die chronologische Folge, die von der Queue enforced wurde, stören könnte.
