@@ -2,6 +2,14 @@
 
 ## SNAPSHOT v3.0.0
 
+## [3.9 Paralleles und ortsunabhängiges Loggen auf LoggerServer](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/24)
+
+LoggerServer
+- Use dedicated virtual threads for accepting incoming socket connections and handling all messages sent across by the client during their lifetime
+- Split the accepting and persisting of logs into a multiple publishers and a consumer (single thread). Between is a priority queue which is responsible for enforcing the correct chronolgical of how the logs are persisted.
+
+Contributors: @jan.rueger1
+
 ### [3.8 Zuverlässige Behandlung von Verbindungsunterbrüchen](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/23)
 
 LoggerComponent
