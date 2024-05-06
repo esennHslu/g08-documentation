@@ -1,11 +1,11 @@
 # CHANGELOG
 
-## SNAPSHOT v3.0.0
-
+## Release v3.0.0
 
 ### [3.10 Anbindung von StringPersistor mittels Adapter-Pattern](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/25)
 
 LoggerServer
+
 - Added adapter to handle the communication with the StringPersistor interface in the LoggerServer
 - Added Tests for adapter
 - Added Exception Handling in safeLogMessage method
@@ -15,26 +15,31 @@ Contributors: @enya.senn1
 ### [3.9 Paralleles und ortsunabhängiges Loggen auf LoggerServer](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/24)
 
 LoggerServer
-- Use dedicated virtual threads for accepting incoming socket connections and handling all messages sent across by the client during their lifetime
-- Split the accepting and persisting of logs into a multiple publishers and a consumer (single thread). Between is a priority queue which is responsible for enforcing the correct chronolgical of how the logs are persisted.
+
+- Use dedicated virtual threads for accepting incoming socket connections and handling all messages sent across by the
+  client during their lifetime
+- Split the accepting and persisting of logs into a multiple publishers and a consumer (single thread). Between is a
+  priority queue which is responsible for enforcing the correct chronolgical of how the logs are persisted.
 
 Contributors: @jan.rueger1
 
 ### [3.8 Zuverlässige Behandlung von Verbindungsunterbrüchen](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/23)
 
 LoggerComponent
+
 - Cache logs if logger client cannot connect at startup or connection breaks
 - Resend cached logs on startup or once connection is resumed
 
 Demo App
+
 - Send every type of loglevel upon cli user input (loop)
 
 StringPersistor
+
 - Strings to be saved now escape newline characters
 - If get is called but nothing has been saved before, an empty list is returned
 
 Contributors: @laurin.scholtysik1
-
 
 ### [3.11 Austauschbare Speicherformate](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/26)
 
@@ -52,7 +57,6 @@ Contributors: @eldar.omerovic1
 - A docker-compose file was also added that runs the dockerimage as a container.
 
 Contributors: @enya.senn1
-
 
 ### [2.4 Logger-Schnittstelle: Austauschbarkeit](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/10)
 
@@ -73,7 +77,7 @@ Contributors: @eldar.omerovic1
 
 - LoggerServer can now be configured through the LoggerServer.properties file.
 
-Contributors: @laurin.scholtysik1 
+Contributors: @laurin.scholtysik1
 
 ### [Use StringPersistor to save log messages](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/12)
 
