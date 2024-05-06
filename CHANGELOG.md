@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## SNAPSHOT v4.0.0
+
+### [Introduce dedicated Logging Library for Logger Server](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/32)
+
+LoggerServer
+
+- Added & configured _logback_ as defautl logger via sfl4j
+- Replaced all direct logs to `System.out` with their according sfl4j alternatives
+
+Contributors: @jan.rueger1
+
+
 ## Release v3.0.0
 
 ### [3.10 Anbindung von StringPersistor mittels Adapter-Pattern](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/25)
