@@ -12,7 +12,7 @@ LoggerServer
 
 Contributors: @enya.senn1
 
-## [3.9 Paralleles und ortsunabhängiges Loggen auf LoggerServer](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/24)
+### [3.9 Paralleles und ortsunabhängiges Loggen auf LoggerServer](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/24)
 
 LoggerServer
 - Use dedicated virtual threads for accepting incoming socket connections and handling all messages sent across by the client during their lifetime
