@@ -2,6 +2,15 @@
 
 ## SNAPSHOT v4.0.0
 
+### [Simplify LoggerServer architecture & add integration tests](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/31)
+
+LoggerServer
+
+- Removed the consumer-producer setup which was previously decoupled by a priority queue, thus simplifying the overall architecture while maintaining the same functionality
+- Set up Testcontainers and added multiple integration tests to check the behaviour of the logger-server under different circumstances
+
+Contributors: @jan.rueger1
+
 ### [Introduce dedicated Logging Library for Logger Server](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/32)
 
 LoggerServer
