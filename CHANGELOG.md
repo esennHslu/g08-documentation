@@ -2,6 +2,14 @@
 
 ## SNAPSHOT v4.0.0
 
+### [Implement log file format for competition](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/33)
+
+LoggerServer
+
+- Add log formatting strategy for competition
+
+Contributors: @eldar.omerovic1
+
 ### [Simplify LoggerServer architecture & add integration tests](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/31)
 
 LoggerServer
