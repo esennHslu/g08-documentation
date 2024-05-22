@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### [4.14 Vorbereitung für Abschlusswettbewerb](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/30)
+
+LoggerServer
+
+- If the environment variables LOG_FILE or LISTEN_PORT are set, use those values as config instead of the values in the configfile.
+
+Contributors: @laurin.scholtysik1
+
 ## SNAPSHOT v4.0.0
 
 ### [Implement log file format for competition](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/33)
