@@ -1,0 +1,177 @@
+= LoggerViewer and LoggerServer Documentation
+
+== Overview
+
+This documentation provides an overview of the `LoggerViewer` and `LoggerServer` applications, detailing how they communicate via WebSockets and how the `LoggerViewer` displays the status of the `LoggerServer`.
+
+== LoggerViewer
+
+The `LoggerViewer` is a JavaFX application that connects to a WebSocket server to display log messages in real-time.
+
+=== Key Components
+
+* `VBox logContainer`: Holds log messages and status updates.
+* `WebSocketClient client`: Connects to the `LoggerServer` to receive log messages.
+
+=== Initialization
+
+The `LoggerViewer` initializes the UI and attempts to connect to the WebSocket server when started:
+
+```java
+@Override
+public void start(Stage primaryStage) {
+    logContainer = new VBox();
+    ScrollPane scrollPane = new ScrollPane(logContainer);
+    Scene scene = new Scene(scrollPane, 800, 600);
+    connectToServer();
+    primaryStage.setScene(scene);
+    primaryStage.setTitle("LoggerViewer");
+    primaryStage.show();
+}
+```
+=== Connecting to the Server
+
+The `connectToServer` method establishes a WebSocket connection:
+
+```java
+private void connectToServer() {
+    if (isConnecting.compareAndSet(false, true)) {
+        try {
+            client = new WebSocketClient(new URI("ws://localhost:8025")) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                    isConnected.set(true);
+                    isConnecting.set(false);
+                    isReconnecting.set(false);
+                    Platform.runLater(() -> displayConnectionStatus("Connected to server"));
+                }
+                @Override
+                public void onMessage(String message) {
+                    Platform.runLater(() -> displayLogMessage(message));
+                }
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    isConnected.set(false);
+                    isConnecting.set(false);
+                    Platform.runLater(() -> displayConnectionStatus("Connection lost: " + reason));
+                    reconnectToServer();
+                }
+                @Override
+                public void onError(Exception ex) {
+                    isConnected.set(false);
+                    isConnecting.set(false);
+                    Platform.runLater(() -> displayConnectionStatus("Error: " + ex.getMessage()));
+                    reconnectToServer();
+                }
+            };
+            client.connect();
+        } catch (URISyntaxException e) {
+        isConnecting.set(false);
+        e.printStackTrace();
+        }
+    }
+}
+```
+
+=== Displaying Status and Log Messages
+
+The `LoggerViewer` displays the status and log messages using `Label` elements within a `VBox` container:
+
+```java
+private void displayLogMessage(String message) {
+    Label logLabel = new Label(message);
+    logContainer.getChildren().add(logLabel);
+}
+
+private void displayConnectionStatus(String status) {
+    Label statusLabel = new Label(status);
+    logContainer.getChildren().add(statusLabel);
+}
+```
+
+== LoggerServer
+
+The `LoggerServer` is a simple TCP server that listens for log messages and broadcasts them to connected clients using WebSockets.
+
+=== Key Components
+
+* `ServerSocket listener`: Listens for incoming TCP connections.
+* `LogWebSocketServer logWebSocketServer`: Manages WebSocket connections and broadcasts messages.
+* `LogMessageAdapter logMessageAdapter`: Adapts log messages for persistence and broadcasting.
+
+=== Initialization
+
+The `LoggerServer` initializes its components and starts listening for incoming connections:
+
+```java
+public void listen() {
+try {
+logWebSocketServer.startServer();
+listener = new ServerSocket(config.getSocketPort(), 0, InetAddress.getByName(config.getSocketAddress()));
+virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
+
+        LOG.info("Server started, listening on {}:{} for connections...", config.getSocketAddress(), config.getSocketPort());
+
+        while (true) {
+            Socket client = listener.accept();
+            Runnable logConsumer = new LogMessageRequestHandler(client, logMessageAdapter);
+            virtualThreadExecutor.execute(logConsumer);
+        }
+    } catch (Exception exception) {
+        LOG.error("Unexpected error during runtime", exception);
+        throw new IllegalStateException("Unexpected error during runtime", exception);
+    }
+}
+```
+
+=== Stopping the Server
+
+The `LoggerServer` can be stopped, releasing all resources and closing connections:
+
+```java
+public void stop() {
+    try {
+        if (listener != null && !listener.isClosed()) {
+            listener.close();
+        }
+        if (virtualThreadExecutor != null && !virtualThreadExecutor.isShutdown()) {
+            virtualThreadExecutor.shutdown();
+        }
+        logWebSocketServer.stopServer();
+        LOG.info("Server stopped");
+    } catch (IOException e) {
+        LOG.error("Error stopping the server", e);
+    }
+}
+```
+
+== Communication via WebSockets
+
+The `LoggerServer` uses a `LogWebSocketServer` to broadcast log messages to connected `LoggerViewer` clients.
+When a new log message is received by the `LoggerServer`, it is sent to all connected clients via the WebSocket server:
+
+```java
+public void broadcast(String logMessage) {
+    synchronized (clients) {
+        for (WebSocket client : clients) {
+            if (client.isOpen()) {
+                client.send(logMessage);
+            }
+        }
+    }
+}
+```
+
+The `LoggerViewer` receives these messages and displays them in the UI:
+
+```java
+@Override
+public void onMessage(String message) {
+    Platform.runLater(() -> displayLogMessage(message));
+}
+```
+
+== Conclusion
+
+The `LoggerViewer` and `LoggerServer` work together to provide real-time log message display using WebSockets.
+The `LoggerServer` broadcasts log messages to all connected `LoggerViewer` clients, which display these messages along with the connection status in a user-friendly interface.

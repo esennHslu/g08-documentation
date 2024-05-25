@@ -8,6 +8,15 @@ LoggerServer
 
 Contributors: @laurin.scholtysik1
 
+### [4.13a LoggerViewer](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/29)
+
+- Added a new module LoggerViewer
+- LoggerViewer is a simple Java GUI that displays the logs from the LoggerServer
+- The loggerServer communicates with the LoggerViewer via a socket connection and  push notifications
+- The LoggerViewer also displays the Status of the LoggerServer
+
+Contributors: @enya.senn1
+
 ## SNAPSHOT v4.0.0
 
 ### [Implement log file format for competition](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/33)

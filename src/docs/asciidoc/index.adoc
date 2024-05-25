@@ -29,6 +29,7 @@ Das Team besteht aus folgenden Personen:
 * link:technical/LogStrategies.adoc[Log Strategies]
 * link:technical/CreateLoggerInstance.adoc[Create Logger Instance]
 * link:technical/LogMessageFromClientToFile.adoc[Log-Message From Client To File - The Process]
+* link:technical/LoggerViewer.adoc[Logger Viewer]
 
 == Verteilte Systeme und Komponenten (VSK) - HSLU
 image::HSLU-Logo-21-klein.png[HSLU-Logo]
