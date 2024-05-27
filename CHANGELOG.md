@@ -2,6 +2,13 @@
 
 ## SNAPSHOT v4.0.0
 
+### [Improve Performance of Client-Server Communication](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/35)
+
+- Replace the standard Java serialization framework (`Serializable`), with the more performant and efficient [kryo](https://github.com/EsotericSoftware/kryo) library
+- Reduces an average log message round about 3/4 in size, when in a serialized form
+
+Contributors: @jan.rueger1
+
 ### [String-Persistor Performance Improvements](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/34)
 
 StringPersistor
