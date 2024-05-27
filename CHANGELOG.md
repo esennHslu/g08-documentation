@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## SNAPSHOT v4.0.0
+
+### [String-Persistor Performance Improvements](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/34)
+
+StringPersistor
+- Replace the slower `java.io.*` with `java.nio.Files.*` apis for fs-operatiobs, since they are generally more performant and optimized for the underlying OS filesystem
+- Remove costly Regexp construction for replacing linebreaks to spaces
+
+Contributors: @eldar.omerovic1, @jan.rueger1
+
 ### [4.14 Vorbereitung für Abschlusswettbewerb](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/30)
 
 LoggerServer
@@ -16,8 +26,6 @@ Contributors: @laurin.scholtysik1
 - The LoggerViewer also displays the Status of the LoggerServer
 
 Contributors: @enya.senn1
-
-## SNAPSHOT v4.0.0
 
 ### [Implement log file format for competition](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/33)
 
