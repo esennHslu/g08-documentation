@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## SNAPSHOT v4.0.0
+## Release v4.0.0
 
 ### [Improve Performance of Client-Server Communication](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/35)
 
-- Replace the standard Java serialization framework (`Serializable`), with the more performant and efficient [kryo](https://github.com/EsotericSoftware/kryo) library
+- Replace the standard Java serialization framework (`Serializable`), with the more performant and
+  efficient [kryo](https://github.com/EsotericSoftware/kryo) library
 - Reduces an average log message round about 3/4 in size, when in a serialized form
 
 Contributors: @jan.rueger1
@@ -12,7 +13,9 @@ Contributors: @jan.rueger1
 ### [String-Persistor Performance Improvements](https://gitlab.switch.ch/hslu/edu/bachelor-computer-science/vsk/24fs01/g08/g08-documentation/-/issues/34)
 
 StringPersistor
-- Replace the slower `java.io.*` with `java.nio.Files.*` apis for fs-operatiobs, since they are generally more performant and optimized for the underlying OS filesystem
+
+- Replace the slower `java.io.*` with `java.nio.Files.*` apis for fs-operatiobs, since they are generally more
+  performant and optimized for the underlying OS filesystem
 - Remove costly Regexp construction for replacing linebreaks to spaces
 
 Contributors: @eldar.omerovic1, @jan.rueger1
@@ -21,7 +24,8 @@ Contributors: @eldar.omerovic1, @jan.rueger1
 
 LoggerServer
 
-- If the environment variables LOG_FILE or LISTEN_PORT are set, use those values as config instead of the values in the configfile.
+- If the environment variables LOG_FILE or LISTEN_PORT are set, use those values as config instead of the values in the
+  configfile.
 
 Contributors: @laurin.scholtysik1
 
@@ -29,7 +33,7 @@ Contributors: @laurin.scholtysik1
 
 - Added a new module LoggerViewer
 - LoggerViewer is a simple Java GUI that displays the logs from the LoggerServer
-- The loggerServer communicates with the LoggerViewer via a socket connection and  push notifications
+- The loggerServer communicates with the LoggerViewer via a socket connection and push notifications
 - The LoggerViewer also displays the Status of the LoggerServer
 
 Contributors: @enya.senn1
@@ -46,8 +50,10 @@ Contributors: @eldar.omerovic1
 
 LoggerServer
 
-- Removed the consumer-producer setup which was previously decoupled by a priority queue, thus simplifying the overall architecture while maintaining the same functionality
-- Set up Testcontainers and added multiple integration tests to check the behaviour of the logger-server under different circumstances
+- Removed the consumer-producer setup which was previously decoupled by a priority queue, thus simplifying the overall
+  architecture while maintaining the same functionality
+- Set up Testcontainers and added multiple integration tests to check the behaviour of the logger-server under different
+  circumstances
 
 Contributors: @jan.rueger1
 
@@ -59,7 +65,6 @@ LoggerServer
 - Replaced all direct logs to `System.out` with their according sfl4j alternatives
 
 Contributors: @jan.rueger1
-
 
 ## Release v3.0.0
 
