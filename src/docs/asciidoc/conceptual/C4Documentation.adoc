@@ -1,50 +1,71 @@
 == C4 Modell
 
-== C1 Architektur Diagram
+== C1 Context Diagram
+image::../images/C1_ContextDiagram.png[Context Diagram for Logging System]
+Das Kontextdiagramm zeigt die Beziehung zwischen dem Logging-System und den externen Systemen oder Benutzern. Es zeigt, wie das Logging-System mit anderen Systemen interagiert und welche Rollen die Benutzer oder Systeme in diesem Kontext spielen.
 
-- **Client-System**: Dies ist der Ort, an dem der Benutzer oder das System die Protokollmeldungen initiiert.
-- **Protokollserver**: Ein System, das Protokollnachrichten vom Client empfängt und sie möglicherweise speichert oder verarbeitet.
-- **Logger Common**: Eine gemeinsame Bibliothek oder ein Satz von Dienstprogrammen, die sowohl vom Client als auch vom Server verwendet werden, um die Protokollierung zu erleichtern.
-- **Logger-Komponente**: Ein spezifisches Modul oder eine Komponente innerhalb des Client-Systems, das/die für das Senden von Protokollnachrichten verantwortlich ist.
-- **Logger-Server**: Die serverseitige Anwendung, die eingehende Protokollnachrichten verarbeitet.
 
-Mermaid Diagram Code:
-
-[mermaid, format="svg", opts="inline"]
-----
-C4Context
-  title System Context diagram for Logging System
-  Enterprise_Boundary(eb, "Logging System") {
-    Person(client, "Client", "User or system that initiates log messages.")
-    System_Boundary(sb, "Client System") {
-      System(loggerComponent, "Logger Component", "Module responsible for sending log messages.")
-      System(loggerCommon, "Logger Common", "Shared library for logging functionalities.")
-    }
-    System(loggerServer, "Logging Server", "Receives and processes log messages.")
-
-    Rel(client, loggerComponent, "Initiates log messages")
-    BiRel(loggerComponent, loggerCommon, "Uses shared logging utilities")
-    Rel(loggerComponent, loggerServer, "Sends log messages to")
-  }
-----
 
 == C2 Container Diagram
+Das Container-Diagramm zeigt die internen Komponenten und deren Beziehungen zueinander. Es zeigt die verschiedenen Container, aus denen das Logging-System besteht, und wie sie miteinander kommunizieren.
 
-[mermaid, format="svg", opts="inline"]
-----
-graph TB
-    %% C2 Level - Container Diagram for DemoApp
-    subgraph "Logging System"
-        LoggerClient(Logger Client) -. "Implements" .-> LoggerInterface(Logger Interface)
-        LoggerClient -- "RPC Calls" --> LoggerServer(Logger Server)
-        LoggerServer -- "Uses" --> StringPersistor(String Persistor)
-    end
+image::../images/C2_ContainerDiagram.png[Container Diagram for Logging System]
 
-    DemoApp(Demo App) -- "Uses" --> LoggerInterface
 
-    classDef system fill:#e6e6e6,stroke:#333,stroke-width:2px;
-    classDef container fill:#f9f,stroke:#333,stroke-width:1px;
-    classDef external fill:#ff9,stroke:#333,stroke-width:1px;
-    class LoggerInterface,LoggerCommon,LoggerServer,StringPersistor container;
-    class DemoApp,LoggerClient system;
-----
+== C3 Component Diagram
+Das Komponentendiagramm zeigt die internen Komponenten und deren Beziehungen zueinander. Es zeigt die verschiedenen Komponenten, aus denen das Logging-System besteht, und wie sie miteinander interagieren.
+
+image::../images/C3_ComponentDiagram.png[Component Diagram for Logging System]
+
+== C4 Class Diagram
+image::../images/C4-ClassDiagram.jpeg[Class Diagram for Logging System]
+
+Das Klassendiagramm stellt die Struktur und die Beziehungen der verschiedenen Klassen in einem komplexen Logging-System dar. Es besteht aus mehreren Hauptkomponenten, die jeweils spezifische Aufgaben und Verantwortlichkeiten haben, um die gesamte Funktionalität des Systems zu gewährleisten.
+
+### Hauptkomponenten
+
+1. **DemoApp**
+Die `DemoApp`-Klasse enthält die `main`-Methode, die den Einstiegspunkt der Anwendung darstellt. Diese Methode initialisiert das System und startet den Anwendungslauf.
+
+2. **ConfigHandler**
+Der `ConfigHandler` ist für das Laden und Verwalten der Konfiguration der Anwendung zuständig. Er besitzt Attribute wie `configFilePath`, `applicationConfig`, `portNumber`, `logLevel` und `localAddress`. Methoden wie `loadConfiguration` und `getApplicationConfig` ermöglichen das Einlesen und Abrufen der Konfigurationsdaten.
+
+3. **LoggerServer**
+Diese Klasse startet und verwaltet den Logging-Server. Der `LoggerServer` enthält Methoden wie `main` und `start`, die für den Serverstart und die Steuerung verantwortlich sind.
+
+4. **LogFormatter**
+`LogFormatter` ist eine abstrakte Klasse, die die Methode `format` definiert, welche eine `LogMessage` in einen String umwandelt. Diese Klasse wird von spezifischen Formatierungsklassen wie `CSVLogFormatter`, `TextLogFormatter` und `ComponentIdFormatter` erweitert, die jeweils ihre eigenen Implementierungen der `format`-Methode bieten.
+
+5. **FilterHandler**
+Die Klasse `FilterHandler` ist für die Verarbeitung und Filterung von Log-Nachrichten zuständig. Methoden wie `convertFromExisting` und `persistLogMessage` ermöglichen die Konvertierung und Speicherung von Log-Daten.
+
+6. **FindStringParameter**
+Diese Klasse unterstützt das Finden und Verarbeiten von String-Parametern. Sie bietet Methoden wie `convertFromExisting` und `persistString`, um Strings in verschiedenen Kontexten zu bearbeiten.
+
+7. **LoggerClientBuilder**
+Der `LoggerClientBuilder` hilft beim Aufbau von Logger-Clients. Er enthält Attribute wie `hostname`, `port` und `useHttps` sowie die Methode `build`, die einen `LoggerClient` erstellt.
+
+8. **LoggerClient**
+Die `LoggerClient`-Klasse stellt einen Client dar, der Log-Nachrichten an den Server sendet. Sie verwendet den `LoggerClientBuilder` für die Initialisierung und bietet Methoden wie `sendLogMessage`, um Nachrichten zu senden.
+
+9. **LoggerViewer**
+`LoggerViewer` ist eine Klasse, die Log-Nachrichten visualisiert. Sie verwendet einen `WebSocketClient` für die Kommunikation und bietet Methoden wie `reconnect` und `receiveLogMessage`, um Verbindungen zu verwalten und Nachrichten zu empfangen.
+
+10. **LoggerViewerHandler**
+Diese Klasse verwaltet mehrere `LoggerViewer` und bietet Methoden wie `addViewer`, `removeViewer` und `broadcastLogMessage`, um Viewer hinzuzufügen, zu entfernen und Nachrichten an alle Viewer zu senden.
+
+11. **LogMessage**
+`LogMessage` repräsentiert eine Log-Nachricht und enthält Attribute wie `timestamp`, `logLevel` und `message`. Ein integrierter Builder ermöglicht den einfachen Aufbau von Log-Nachrichten mit Methoden wie `withTimestamp`, `withLogLevel` und `withMessage`.
+
+12. **LogReceiverServer**
+Diese Klasse empfängt Log-Nachrichten und bietet die Methode `receiveLogMessage` zum Verarbeiten eingehender Nachrichten.
+
+13. **LogMessageImportHandler**
+`LogMessageImportHandler` importiert Log-Nachrichten aus einer Datei und bietet die Methode `importMessagesFromFile`, um Nachrichten aus einer Datei zu laden.
+
+### Beziehungen
+
+Die Klassen im Diagramm sind durch verschiedene Arten von Beziehungen miteinander verbunden:
+
+- **Vererbung**: Die Klassen `CSVLogFormatter`, `TextLogFormatter` und `ComponentIdFormatter` erben von der abstrakten Klasse `LogFormatter`.
+- **Assoziationen**: Es gibt viele Assoziationen zwischen den Klassen, die zeigen, wie sie miteinander interagieren. Beispielsweise verwendet `LoggerClient` den `LoggerClientBuilder` für die Initialisierung und `LoggerViewerHandler` verwaltet mehrere `LoggerViewer`.
